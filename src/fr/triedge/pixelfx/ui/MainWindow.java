@@ -2,10 +2,13 @@ package fr.triedge.pixelfx.ui;
 
 import fr.triedge.pixelfx.engine.Program;
 import fr.triedge.pixelfx.model.OpenableItem;
+import fr.triedge.pixelfx.model.Project;
 import fr.triedge.pixelfx.model.RootTree;
+import fr.triedge.pixelfx.model.Tileset;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -34,10 +37,11 @@ public class MainWindow {
 	private TabPane tabPane;
 	private TreeView<OpenableItem> treeProject;
 	private TreeItem<OpenableItem> treeRoot;
+	private ContextMenu treeMenuProject, treeMenuTileset;
 	
 	private MenuBar menubar;
 	private Menu menuFile;
-	private MenuItem itemExit, itemNewProject, itemOpenProject;
+	private MenuItem itemExit, itemNewProject, itemOpenProject, itemContextNewTileset, itemContextRenameTileset, itemContextRenameProject;
 	
 	public MainWindow(Program program, Stage stage, String title, double width, double height, String theme, String icon) {
 		setStage(stage);
@@ -74,6 +78,28 @@ public class MainWindow {
 						item.getValue().open(getProgram());
 					
 		        }
+			}
+		});
+		
+		// Set Context Menu
+		setItemContextNewTileset(new MenuItem("New Tileset"));
+		setItemContextRenameProject(new MenuItem("Rename Project"));
+		setItemContextRenameTileset(new MenuItem("Rename Tileset"));
+		setTreeMenuProject(new ContextMenu());
+		setTreeMenuTileset(new ContextMenu());
+		getTreeMenuProject().getItems().addAll(getItemContextRenameProject(),getItemContextNewTileset());
+		getTreeMenuProject().setAutoHide(true);
+		getTreeMenuProject().setHideOnEscape(true);
+		getTreeMenuTileset().getItems().addAll(getItemContextRenameTileset());
+		getTreeMenuTileset().setAutoHide(true);
+		getTreeMenuTileset().setHideOnEscape(true);
+		
+		getTreeProject().setOnContextMenuRequested(e -> {
+			OpenableItem selected = getTreeProject().getSelectionModel().getSelectedItem().getValue();
+			if (selected instanceof Project) {
+				getTreeMenuProject().show(getTreeProject(),e.getScreenX(), e.getScreenY());
+			}else if (selected instanceof Tileset) {
+				getTreeMenuTileset().show(getTreeProject(),e.getScreenX(), e.getScreenY());
 			}
 		});
 		
@@ -256,5 +282,45 @@ public class MainWindow {
 
 	public void setProgram(Program program) {
 		this.program = program;
+	}
+
+	public MenuItem getItemContextNewTileset() {
+		return itemContextNewTileset;
+	}
+
+	public void setItemContextNewTileset(MenuItem itemContextNewTileset) {
+		this.itemContextNewTileset = itemContextNewTileset;
+	}
+
+	public ContextMenu getTreeMenuProject() {
+		return treeMenuProject;
+	}
+
+	public void setTreeMenuProject(ContextMenu treeMenuProject) {
+		this.treeMenuProject = treeMenuProject;
+	}
+
+	public ContextMenu getTreeMenuTileset() {
+		return treeMenuTileset;
+	}
+
+	public void setTreeMenuTileset(ContextMenu treeMenuTileset) {
+		this.treeMenuTileset = treeMenuTileset;
+	}
+
+	public MenuItem getItemContextRenameTileset() {
+		return itemContextRenameTileset;
+	}
+
+	public void setItemContextRenameTileset(MenuItem itemContextRenameTileset) {
+		this.itemContextRenameTileset = itemContextRenameTileset;
+	}
+
+	public MenuItem getItemContextRenameProject() {
+		return itemContextRenameProject;
+	}
+
+	public void setItemContextRenameProject(MenuItem itemContextRenameProject) {
+		this.itemContextRenameProject = itemContextRenameProject;
 	}
 }

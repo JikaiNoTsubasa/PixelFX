@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <name>Triedge</name>
+    <tileset>
+        <image>SFFODIWRNEWRJETJTO</image>
+        <imageHeight>256</imageHeight>
+        <imageWidth>256</imageWidth>
+        <name>Character 1</name>
+    </tileset>
+    <tileset>
+        <image>SFFODIWRNEWRJETJTO</image>
+        <imageHeight>0</imageHeight>
+        <imageWidth>0</imageWidth>
+        <name>Character 2</name>
+    </tileset>
+</project>

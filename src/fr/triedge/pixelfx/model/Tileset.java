@@ -8,6 +8,8 @@ public class Tileset implements OpenableItem{
 
 	private String name;
 	private String image;
+	private int imageWidth, imageHeight;
+	
 	public String getImage() {
 		return image;
 	}
@@ -30,5 +32,19 @@ public class Tileset implements OpenableItem{
 	@Override
 	public String toString() {
 		return getName();
+	}
+	public int getImageHeight() {
+		return imageHeight;
+	}
+	@XmlElement
+	public void setImageHeight(int imageHeight) {
+		this.imageHeight = imageHeight;
+	}
+	public int getImageWidth() {
+		return imageWidth;
+	}
+	@XmlElement
+	public void setImageWidth(int imageWidth) {
+		this.imageWidth = imageWidth;
 	}
 }

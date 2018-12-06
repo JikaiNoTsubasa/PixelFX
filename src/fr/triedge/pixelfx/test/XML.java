@@ -15,15 +15,17 @@ public class XML {
 		Project el = new Project();
 		el.setName("Triedge");
 		Tileset tile1 = new Tileset();
-		tile1.setName("Character1");
+		tile1.setName("Character 1");
+		tile1.setImageWidth(256);
+		tile1.setImageHeight(256);
 		tile1.setImage("SFFODIWRNEWRJETJTO");
 		Tileset tile2 = new Tileset();
-		tile2.setName("Character1");
+		tile2.setName("Character 2");
 		tile2.setImage("SFFODIWRNEWRJETJTO");
 		el.getTilesets().add(tile1);
 		el.getTilesets().add(tile2);
 		
-		File file = new File("storage/project");
+		File file = new File("storage/Game.pixelfx");
 		
 		JAXBContext jaxbContext = JAXBContext.newInstance(el.getClass());
 		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();

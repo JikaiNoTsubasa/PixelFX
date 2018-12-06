@@ -3,6 +3,7 @@ package fr.triedge.pixelfx.engine;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
 
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 public class Program extends Application{
 	
 	private MainWindow mainWindow;
+	private ArrayList<Project> projects = new ArrayList<>();
 	
 	public void initProgram() {
 		// Load config
@@ -59,6 +61,11 @@ public class Program extends Application{
 			return;
 		getMainWindow().getItemExit().setOnAction(e -> actionExit(e));
 		getMainWindow().getItemOpenProject().setOnAction(e -> actionOpenProject(e));
+		getMainWindow().getItemNewProject().setOnAction(e -> actionNewProject(e));
+	}
+
+	private void actionNewProject(ActionEvent e) {
+		
 	}
 
 	private void actionOpenProject(ActionEvent e) {
@@ -72,6 +79,7 @@ public class Program extends Application{
 		}
 		try {
 			Project prj = Utils.loadXml(Project.class, file);
+			getProjects().add(prj);
 			importProjectToTree(prj);
 			Utils.updateStatus("Loaded project: "+prj.getName());
 		} catch (JAXBException e1) {
@@ -120,6 +128,8 @@ public class Program extends Application{
 	
 	public void eventOpenTilsetNode(Tileset tileset) {
 		TilesetEditor editor = new TilesetEditor(tileset);
+		editor.buildUI();
+		editor.buildActions();
 		openTab(tileset.getName(), editor);
 	}
 
@@ -133,6 +143,14 @@ public class Program extends Application{
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public ArrayList<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(ArrayList<Project> projects) {
+		this.projects = projects;
 	}
 
 
